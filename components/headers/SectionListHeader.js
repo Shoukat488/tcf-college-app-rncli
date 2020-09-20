@@ -14,12 +14,14 @@ import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import {TouchableOpacity} from 'react-native-gesture-handler';
 import ActionTypes from '../../store/actions/ActionsTypes';
 import SectionAction from '../../store/actions/SectionAction';
+import NotificationAction from '../../store/actions/NotificationAction';
 
 const SectionListHeader = ({
   navigation,
   updatedData,
   handleSearchBar,
   yearHandler,
+  section
 }) => {
   const dispatch = useDispatch();
   const [loading, setLoader] = useState(false);
@@ -28,7 +30,7 @@ const SectionListHeader = ({
     year === 'XI' ? false : true,
   );
   useEffect(() => {}, []);
-  const nextHandler = () => {
+  const setHandler = () => {
     setLoader(true);
     dispatch({
       type: ActionTypes.SETYEAR,
@@ -39,9 +41,11 @@ const SectionListHeader = ({
     if (newYear === 'XI') {
       dispatch({type: ActionTypes.SETSECTIONSXI, payload: updatedData});
       SectionAction.setToStorageXI(updatedData);
+      NotificationAction.scheduleNotifications(section,'XI')
     } else {
       dispatch({type: ActionTypes.SETSECTIONSXII, payload: updatedData});
       SectionAction.setToStorageXII(updatedData);
+      NotificationAction.scheduleNotifications(section,'XII')
     }
     setTimeout(() => {
       setLoader(false);
@@ -98,7 +102,7 @@ const SectionListHeader = ({
         {loading ? (
           <ActivityIndicator style={styles.loader} size={24} color="#028742" />
         ) : (
-          <TouchableOpacity style={styles.nextButton} onPress={nextHandler}>
+          <TouchableOpacity style={styles.nextButton} onPress={setHandler}>
             <Text style={{color: '#EBEBE3'}}>Set</Text>
           </TouchableOpacity>
         )}

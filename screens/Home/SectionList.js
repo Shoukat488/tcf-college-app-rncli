@@ -1,6 +1,6 @@
 import React, {useEffect, useState} from 'react';
 import {Text, View, FlatList, StyleSheet, Switch, Platform} from 'react-native';
-import CheckBox from '@react-native-community/checkbox'
+import CheckBox from '@react-native-community/checkbox';
 // import {CheckBox} from 'native-base';
 import {useSelector} from 'react-redux';
 import SectionListHeader from '../../components/headers/SectionListHeader';
@@ -20,6 +20,7 @@ const SectionList = ({navigation}) => {
     (state) => state.SectionReducer.sectionsXII,
   );
   const [listData, setListData] = useState([]);
+  const [section, setSection] = useState(null);
   useEffect(() => {
     const subscribe = navigation.addListener('focus', () => {
       setter();
@@ -33,6 +34,7 @@ const SectionList = ({navigation}) => {
   const selectedHandler = (title) => {
     let tempList = listData.map((item, i) => {
       if (item.title === title) {
+        setSection(item.title);
         return {
           ...item,
           selected: true,
@@ -46,6 +48,7 @@ const SectionList = ({navigation}) => {
     if (filter.isSearcching) {
       let filteredData = filter.data.map((item) => {
         if (item.title === title) {
+          setSection(item.title);
           return {
             ...item,
             selected: true,
@@ -94,12 +97,12 @@ const SectionList = ({navigation}) => {
       <TouchableOpacity
         style={styles.item}
         onPress={() => selectedHandler(item.title)}>
-          {
-            // Platform.OS === 'android' ?
-            <CheckBox value={item.selected} color="#028742" />
-            // :
-            // <Switch value={item.selected} />
-          }
+        {
+          // Platform.OS === 'android' ?
+          <CheckBox value={item.selected} color="#028742" />
+          // :
+          // <Switch value={item.selected} />
+        }
         <Text
           style={{
             ...styles.checkBoxTxt,
@@ -130,6 +133,7 @@ const SectionList = ({navigation}) => {
         navigation={navigation}
         updatedData={listData}
         yearHandler={handleYear}
+        section={section}
       />
       <FlatList
         contentContainerStyle={styles.contentContainerStyle}

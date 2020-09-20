@@ -6,47 +6,22 @@ import store from './store/index';
 import Welcome from './screens/Welcome';
 import Container from './navigations/Index';
 import {SafeAreaView} from 'react-native-safe-area-context';
-
-import PushNotification from 'react-native-push-notification';
-
+import Notification from './store/actions/NotificationAction';
 export default class App extends Component {
   state = {
     loading: true,
   };
   constructor(props) {
     super(props);
-
-    PushNotification.configure({
-      requestPermissions: Platform.OS === 'ios',
-      onRegister: function (token) {
-        console.log('TOKEN:', token);
-      },
-      onNotification: function (notification) {
-        console.log('NOTIFICATION:', notification);
-      },
-
-      permissions: {
-        alert: true,
-        badge: true,
-        sound: true,
-      },
-      popInitialNotification: true,
-    });
+    Notification.configureNotifications();
   }
   async componentDidMount() {
     setTimeout(() => {
       this.setState({
         loading: false,
       });
-      this.testPush();
     }, 3000);
   }
-  testPush = () => {
-    PushNotification.localNotification({
-      title: 'My Notification Title', // (optional)
-      message: 'My Notification Message', // (required)
-    });
-  };
   render() {
     const loading = this.state.loading;
     if (loading)
