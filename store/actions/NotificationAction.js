@@ -24,9 +24,21 @@ const NotificationAction = {
       }
     };
   },
-  scheduleNotifications: (section, year) => {
-    const notifyTime = store.getState().NotificationReducer.notificationTime;
-    if (notifyTime) {
+  scheduleNotifications: (section = null, year = null, notifyTime = 0) => {
+    if (!notifyTime)
+      notifyTime = store.getState().NotificationReducer.notificationTime;
+    if (!section && !year) {
+      year = store.getState().YearReducer.year;
+      if (year == 'XI') section = store.getState().SectionReducer.sectionsXI;
+      else section = store.getState().SectionReducer.sectionsXII;
+
+      if (section.length)
+        section = section.filter((item) => {
+          if (item.selected === true);
+          return item.title;
+        })[0];
+    }
+    if (notifyTime != 1 && section.length) {
       const table =
         year === 'XI'
           ? store.getState().TableReducer.tableXI

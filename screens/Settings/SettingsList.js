@@ -1,17 +1,11 @@
-import React, { Component } from "react";
-import {
-  View,
-  Text,
-  StyleSheet,
-  Image,
-  TouchableHighlight,
-} from "react-native";
-import { connect } from "react-redux";
-import { ScrollView } from "react-native-gesture-handler";
-import { Divider } from "react-native-paper";
-import NotificationDialoge from "./NotificationDialoge";
-import ActionTypes from "../../store/actions/ActionsTypes";
-import NotificationAction from "../../store/actions/NotificationAction";
+import React, {Component} from 'react';
+import {View, Text, StyleSheet, Image, TouchableHighlight} from 'react-native';
+import {connect} from 'react-redux';
+import {ScrollView} from 'react-native-gesture-handler';
+import {Divider} from 'react-native-paper';
+import NotificationDialoge from './NotificationDialoge';
+import ActionTypes from '../../store/actions/ActionsTypes';
+import NotificationAction from '../../store/actions/NotificationAction';
 class SettingsList extends Component {
   constructor(props) {
     super(props);
@@ -34,7 +28,7 @@ class SettingsList extends Component {
     this.setState({
       notifyValue: value,
     });
-    this.props.setNotificationState(value)
+    this.props.setNotificationState(value);
   };
   render() {
     return (
@@ -42,33 +36,32 @@ class SettingsList extends Component {
         <TouchableHighlight onPress={this.onValueChange.bind(this)}>
           <View
             style={{
-              backgroundColor: "#1F2020",
-              flexDirection: "row",
-              justifyContent: "space-between",
-              alignItems: "center",
+              backgroundColor: '#1F2020',
+              flexDirection: 'row',
+              justifyContent: 'space-between',
+              alignItems: 'center',
               height: 60,
               paddingHorizontal: 15,
-            }}
-          >
-            <View style={{ flexDirection: "row", alignItems: "center" }}>
+            }}>
+            <View style={{flexDirection: 'row', alignItems: 'center'}}>
               <Image
-                style={{ height: 30, width: 30 }}
-                source={require("../../assets/notification.png")}
+                style={{height: 30, width: 30}}
+                source={require('../../assets/notification.png')}
               />
-              <Text style={{ color: "white", fontSize: 20, marginLeft: 25 }}>
+              <Text style={{color: 'white', fontSize: 20, marginLeft: 25}}>
                 Notify me
               </Text>
             </View>
             {this.state.notifyValue !== 1 ? (
-              <Text style={{ color: "grey", fontSize: 16 }}>
+              <Text style={{color: 'grey', fontSize: 16}}>
                 {this.state.notifyValue} minutes before
               </Text>
             ) : (
-              <Text style={{ color: "grey", fontSize: 16 }}>Never</Text>
+              <Text style={{color: 'grey', fontSize: 16}}>Never</Text>
             )}
           </View>
         </TouchableHighlight>
-        <Divider inset={true} style={{ backgroundColor: "#E4E4E2" }} />
+        <Divider inset={true} style={{backgroundColor: '#E4E4E2'}} />
         <NotificationDialoge
           onNotifyValueChange={this.onNotifyValueChange.bind(this)}
           visibleDialoge={this.state.visibleDialoge}
